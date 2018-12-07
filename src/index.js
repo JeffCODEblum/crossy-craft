@@ -1,4 +1,5 @@
-//alert("hello");
+import Graphics from "../assets/graphics.png";
+
 var CURSOR_SPEED = 64;
 var CURSOR_SPEED_Y = 48;
 var canvas = document.getElementById("canvas");
@@ -6,7 +7,7 @@ canvas.style.width = "800px";
 canvas.style.height = "600px";
 var context = canvas.getContext("2d");
 var graphics = new Image();
-graphics.src = "./graphics.png";
+graphics.src = Graphics;
 
 var MAP_W = 16;
 var MAP_D = 16;
