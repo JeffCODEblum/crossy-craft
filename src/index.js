@@ -299,6 +299,7 @@ function Player() {
   this.lastStateChange = 0;
   this.stepsTaken = 0;
   this.equiptment = 0;
+  this.face = 0;
 
   this.render = function() {
     var isoX = ((this.x - camera.x) / 64 - (this.z - camera.z) / 64) * 48 + 750;
@@ -306,7 +307,20 @@ function Player() {
       ((this.x - camera.x) / 64 + (this.z - camera.z) / 64) * 24 +
       250 -
       (this.y - camera.y);
-    context.drawImage(graphics, 0, 188, 97, 98, isoX, isoY, 97, 98);
+    switch (this.face) {
+      case 0:
+        context.drawImage(graphics, 1000, 188, 97, 98, isoX, isoY, 97, 98);
+        break;
+      case 1:
+        context.drawImage(graphics, 1200, 50, 97, 98, isoX, isoY, 97, 98);
+        break;
+      case 2:
+        context.drawImage(graphics, 1000, 50, 97, 98, isoX, isoY, 97, 98);
+        break;
+      case 3:
+        context.drawImage(graphics, 1200, 188, 97, 98, isoX, isoY, 97, 98);
+        break;
+    }
   };
 
   this.update = function() {
@@ -381,18 +395,22 @@ function Player() {
           this.vz = 1;
           this.vx = 0;
           this.vy = 1;
+          this.face = 3;
         } else if (ctrl.w) {
           this.vz = -1;
           this.vx = 0;
           this.vy = 1;
+          this.face = 2;
         } else if (ctrl.d) {
           this.vz = 0;
           this.vx = 1;
           this.vy = 1;
+          this.face = 1;
         } else if (ctrl.a) {
           this.vz = 0;
           this.vx = -1;
           this.vy = 1;
+          this.face = 0;
         }
         if (ctrl.s || ctrl.w || ctrl.d || ctrl.a) {
           var tile = map.getTileAtPosition(
