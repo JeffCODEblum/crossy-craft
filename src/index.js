@@ -1,6 +1,7 @@
 import Graphics from "../assets/graphics.png";
 import Map from "./map.js";
 import Player from "./player.js";
+import Camera from "./camera.js";
 
 var CURSOR_SPEED = 64;
 var CURSOR_SPEED_Y = 48;
@@ -12,9 +13,6 @@ var graphics = new Image();
 graphics.src = Graphics;
 
 //var cursor = new Cursor();
-
-var camera = new Camera();
-var map = new Map(context, camera);
 var ctrl = {
   w: false,
   a: false,
@@ -36,6 +34,8 @@ var ctrl = {
   key7: false,
   key8: false
 };
+var camera = new Camera(ctrl);
+var map = new Map(context, camera);
 var player = new Player(context, camera, map, ctrl);
 
 document.addEventListener("keydown", function(e) {
@@ -262,26 +262,6 @@ function Cursor() {
         }
         this.lastSelect = Date.now();
       }
-    }
-  };
-}
-
-function Camera() {
-  this.x = 0;
-  this.y = 48 * 5;
-  this.z = 0;
-  this.update = function() {
-    if (ctrl.up) {
-      this.z += 4;
-    }
-    if (ctrl.down) {
-      this.z -= 4;
-    }
-    if (ctrl.left) {
-      this.x -= 4;
-    }
-    if (ctrl.right) {
-      this.x += 4;
     }
   };
 }
