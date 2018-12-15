@@ -1,6 +1,6 @@
 import Tile from "./tile.js";
-var MAP_W = 16;
-var MAP_D = 16;
+var MAP_W = 128;
+var MAP_D = 128;
 var MAP_H = 5;
 
 export default function(context, camera) {
@@ -107,12 +107,33 @@ export default function(context, camera) {
     ];
   };
 
+  this.getTileAtIndex = function(h, i, j) {
+    if (h < 0 || i < 0 || j < 0 || h >= MAP_H || i >= MAP_D || j >= MAP_W) {
+      return false;
+    }
+    return this.data[h][i][j];
+  };
+
   this.getRenderData = function() {
     var flattenedData = [];
     for (var h = 0; h < this.data.length; h++) {
-      for (var i = 0; i < this.data[h].length; i++) {
-        for (var j = 0; j < this.data[h][i].length; j++) {
-          flattenedData.push(this.data[h][i][j]);
+      //y
+      for (
+        var i = Math.floor(camera.z / 64) - 8;
+        i < Math.floor(camera.z / 64) + 8;
+        i++
+      ) {
+        // z
+        for (
+          var j = Math.floor(camera.x / 64) - 8;
+          j < Math.floor(camera.x / 64) + 8;
+          j++
+        ) {
+          // x
+          var target = this.getTileAtIndex(h, i, j);
+          if (target != false) {
+            flattenedData.push(target);
+          }
         }
       }
     }
