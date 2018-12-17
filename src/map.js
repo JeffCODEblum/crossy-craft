@@ -86,6 +86,18 @@ export default function(context, camera) {
     }
   }
 
+  // make random water
+  for (var i = 0; i < MAP_D; i++) {
+    for (var j = 0; j < MAP_W; j++) {
+      var rand = Math.floor(Math.random() * 100);
+      if (rand < 48) {
+        this.data[1][i][j].type = 8;
+        //this.data[1][i][j].type = 2;
+      }
+    }
+  }
+  this.automate(10, 1, 8, 1);
+
   // make random elevation
   for (var i = 0; i < MAP_D; i++) {
     for (var j = 0; j < MAP_W; j++) {
@@ -134,6 +146,17 @@ export default function(context, camera) {
       }
     }
   }
+
+  // for (var i = 0; i < MAP_D; i++) {
+  //   for (var j = 0; j < MAP_W; j++) {
+  //     if (this.data[1][i][j].type == 1) {
+  //       var rand = Math.floor(Math.random() * 100);
+  //       if (rand < 25) {
+  //         this.data[1][i][j].type = 7;
+  //       }
+  //     }
+  //   }
+  // }
 
   // for (h = 2; h < 3; h++) {
   //   for (var i = 0; i < MAP_D; i++) {

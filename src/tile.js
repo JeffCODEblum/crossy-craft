@@ -16,21 +16,29 @@ export default function(context, camera) {
       ((this.x - camera.x) / 64 + (this.z - camera.z) / 64) * 24 +
       250 -
       (this.y - camera.y);
-    // outline
+    // outline 0
     if (this.type == 0)
       context.drawImage(graphics, 0, 188, 97, 98, isoX, isoY, 97, 98);
-    // grass
+    // grass 1
     if (this.type == 1)
       context.drawImage(graphics, 200, 188, 97, 98, isoX, isoY, 97, 98);
-    // dirt
+    // dirt 2
     if (this.type == 2)
       context.drawImage(graphics, 400, 188, 97, 98, isoX, isoY, 97, 98);
-    // trunk
+    // trunk 4
     if (this.type == 4)
       context.drawImage(graphics, 600, 188, 97, 98, isoX, isoY, 97, 98);
-    // leaves
+    // leaves 5
     if (this.type == 5)
       context.drawImage(graphics, 800, 188, 97, 98, isoX, isoY, 97, 98);
-    // blank
+    // blank 6
+
+    // pavement 7
+    if (this.type == 7)
+      context.drawImage(graphics, 0, 300, 97, 98, isoX, isoY, 97, 98);
+
+    // water 8
+    if (this.type == 8)
+      context.drawImage(graphics, 200, 300, 97, 98, isoX, isoY, 97, 98);
   };
 }
