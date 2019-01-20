@@ -1,4 +1,5 @@
 import Graphics from "../assets/graphics.png";
+import NpcEngine from "./npcEngine.js";
 import Map from "./map.js";
 import Player from "./player.js";
 import Camera from "./camera.js";
@@ -37,6 +38,11 @@ var ctrl = {
 var camera = new Camera(ctrl);
 var map = new Map(context, camera);
 var player = new Player(context, camera, map, ctrl);
+var npcEngine = new NpcEngine(context, camera, map);
+
+for (var i = 0; i < 12; i++) {
+  npcEngine.spawn();
+}
 
 document.addEventListener("keydown", function(e) {
   console.log(e.keyCode);
@@ -164,31 +170,40 @@ document.addEventListener("keyup", function(e) {
 });
 
 function Render() {
-  var renderData = map.getRenderData();
-  //var drewCursor = false;
-  var drewPlayer = false;
-  for (var i = 0; i < renderData.length; i++) {
-    renderData[i].render();
-    //if (cursor.z == renderData[i].z && cursor.y == renderData[i].y && cursor.x == renderData[i].x) {
-    //cursor.render();
-    //drewCursor = true;
-    //}
-    if (
-      player.z == renderData[i].z &&
-      player.y == renderData[i].y &&
-      player.x == renderData[i].x
-    ) {
-      player.render();
-      drewPlayer = true;
-    }
+  var mapRenderData = map.getRenderData();
+  var npcRenderData = npcEngine.getRenderData();
+  var renderData = [player];
+  for (var i = 0; i < mapRenderData.length; i++) {
+    renderData.push(mapRenderData[i]);
   }
-  //if (!drewCursor) cursor.render();
-  if (!drewPlayer) player.render();
+  for (var i = 0; i < npcRenderData.length; i++) {
+    renderData.push(npcRenderData[i]);
+  }
+
+  var zBuffer = [];
+  while (renderData.length > 0) {
+    var lowest = renderData[0];
+    for (var j = 0; j < renderData.length; j++) {
+      if (
+        renderData[j].x + renderData[j].y + renderData[j].z <
+        lowest.x + lowest.y + lowest.z
+      ) {
+        lowest = renderData[j];
+      }
+    }
+    zBuffer.push(lowest);
+    renderData.splice(renderData.indexOf(lowest), 1);
+  }
+  for (var i = 0; i < zBuffer.length; i++) {
+    zBuffer[i].render();
+  }
+  //if (!drewPlayer) player.render();
 }
 
 function Run() {
   player.update();
   camera.update();
+  npcEngine.update();
   // cursor.update();
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#6565ff";
