@@ -19,6 +19,16 @@ export default function(context, camera) {
     return this.data[h][i][j];
   };
 
+  this.getSpawnTile = function() {
+    for (var i = 0; i < 1000; i++) {
+      var randX = Math.floor(Math.random() * MAP_W);
+      var randZ = Math.floor(Math.random() * MAP_D);
+      if (this.data[1][randZ][randX].type == 1) {
+        return this.data[1][randZ][randX];
+      }
+    }
+  };
+
   this.automate = function(times, y, liveType, deadType) {
     for (var h = 0; h < times; h++) {
       for (var i = 0; i < MAP_D; i++) {
@@ -147,6 +157,32 @@ export default function(context, camera) {
     }
   }
 
+  var randX =
+    Math.floor(Math.random() * Math.floor(MAP_W / 4)) + Math.floor(MAP_W / 4);
+  var randZ =
+    Math.floor(Math.random() * Math.floor(MAP_D / 4)) + Math.floor(MAP_D / 4);
+  for (var i = 0; i < 16; i++) {
+    this.data[1][randZ + i][randX].type = 7;
+    this.data[2][randZ + i][randX].type = 3;
+    this.data[3][randZ + i][randX].type = 3;
+    this.data[4][randZ + i][randX].type = 3;
+
+    this.data[1][randZ + i][randX + 16].type = 7;
+    this.data[2][randZ + i][randX + 16].type = 3;
+    this.data[3][randZ + i][randX + 16].type = 3;
+    this.data[4][randZ + i][randX + 16].type = 3;
+
+    this.data[1][randZ][randX + i].type = 7;
+    this.data[2][randZ][randX + i].type = 3;
+    this.data[3][randZ][randX + i].type = 3;
+    this.data[4][randZ][randX + i].type = 3;
+
+    this.data[1][randZ + 16][randX + i].type = 7;
+    this.data[2][randZ + 16][randX + i].type = 3;
+    this.data[3][randZ + 16][randX + i].type = 3;
+    this.data[4][randZ + 16][randX + i].type = 3;
+  }
+
   // for (var i = 0; i < MAP_D; i++) {
   //   for (var j = 0; j < MAP_W; j++) {
   //     if (this.data[1][i][j].type == 1) {
@@ -202,7 +238,8 @@ export default function(context, camera) {
           tile.type == 1 ||
           tile.type == 2 ||
           tile.type == 4 ||
-          tile.type == 5
+          tile.type == 5 ||
+          tile.type == 7
         ) {
           tile.solid = true;
         }
