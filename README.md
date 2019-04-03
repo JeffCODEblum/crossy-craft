@@ -4,6 +4,9 @@ This is an isometric perspective, voxel based game engine. It uses Crossy Road s
 
 'W', 'A', 'S', 'D' to move around
 'J' to delete a voxel
+
+![alt text](./crossy.gif)
+
 The map is procedurally generated using modified cellular automata.
 
 Don't fall off the map!
